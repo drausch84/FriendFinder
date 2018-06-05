@@ -1,4 +1,4 @@
-module.exports = [
+var friendsArray = [
 {
     name:"Eeyore",
     photo:"https://pbs.twimg.com/profile_images/480490796521492480/bZUrXTxi.png",
@@ -65,3 +65,5 @@ module.exports = [
     scpres:["1","5","1","5","1","5","1","5","1","5"]
 }
 ];
+
+module.exports = friendsArray;

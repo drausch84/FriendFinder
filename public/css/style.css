@@ -52,4 +52,8 @@ p{
   }
   .mainpanel{
       margin:50px;
+
+  }
+  .input-field{
+      background:linear-gradient(lightblue,ghostwhite);
   }
