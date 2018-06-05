@@ -239,47 +239,49 @@
                     // initializing select field for survey
                      $(document).ready(function(){
                         $('select').formSelect();
-                     });
-                    //  initializing modals
-                    $(document).ready(function() {
-                     $('.modal').modal();
-                     });
-                    //  initializing text-input area
-                     $(document).ready(function() {
-                     $('input#input_text, textarea#textarea2').characterCounter();
-                     });
-
-                     $('#submitButton').on('click', function(event) {
-                        event.preventDefault();
-
-                var userInput = {
-				    name: $('#userName').val().trim(),
-				    photo: $('#userPhoto').val().trim(),
-				    scores:[
-					    $('#question1').val(),
-					    $('#question2').val(),
-					    $('#question3').val(),
-					    $('#question4').val(),
-					    $('#question5').val(),
-					    $('#question6').val(),
-					    $('#question7').val(),
-					    $('#question8').val(),
-					    $('#question9').val(),
-					    $('#question10').val()
-				    ]
-			        };
-		
+                        $('.modal').modal({
+				dismissible: false, // Modal can be dismissed by clicking outside of the modal
+				opacity: .5, // Opacity of modal background
+				inDuration: 300, // Transition in duration
+				outDuration: 200, // Transition out duration
+				startingTop: '4%', // Starting top style attribute
+				endingTop: '10%' // Ending top style attribute
+			});
+		});
+		// Activate submit button
+		$('#submitButton').on('click', function(event) {
+			event.preventDefault();
+			// Gather user inputs
+			var userInput = {
+				name: $('#userName').val().trim(),
+				photo: $('#userPhoto').val().trim(),
+				scores:[
+					$('#question1').val(),
+					$('#question2').val(),
+					$('#question3').val(),
+					$('#question4').val(),
+					$('#question5').val(),
+					$('#question6').val(),
+					$('#question7').val(),
+					$('#question8').val(),
+					$('#question9').val(),
+					$('#question10').val()
+				]
+			};
+			
 			// Add user inputs to friends list
 			$.post('/api/friends', userInput)
       		.done(function(data) {
-      			
+      		
       			// Set the name and image values of friend match
       			$('#userMatch').html(data.matchName);
 		    	$("#userMatchImage").attr("src", data.matchImage);
 		    	// Pop open the modal dialog
-      			$('#friend-modal').modal('open');
+      			$('#modal1').modal('open');
       		});
 		});
+
+                   
                 </script>
         </body>
         </html>
