@@ -13,14 +13,15 @@ jQuery
 ### Heroku Deployment
 Find the deployed application here: [Heroku FriendFinder](https://pages.github.com/).
 
-###ScreenShots
+### ScreenShots
 
 This is the home page of the application:
-![image](https://user-images.githubusercontent.com/35150986/41062769-04628158-6994-11e8-8253-25d16176a42b.png">)
+
+![image](https://user-images.githubusercontent.com/35150986/41062769-04628158-6994-11e8-8253-25d16176a42b.png)
 
 This is the survey page of the application:
 
-![image](https://user-images.githubusercontent.com/35150986/41062822-28e78870-6994-11e8-81c7-e5fee9477044.png)
+![image](https://user-images.githubusercontent.com/35150986/41063519-1e8640ea-6996-11e8-9b56-0cd2030772c2.png)
 
 This is showcasing the drop-down function of choosing answers for the survey:
 
