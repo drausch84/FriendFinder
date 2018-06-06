@@ -7,8 +7,11 @@ This is an application that allows a lonely user to find their best friend.  Thr
 For the CSS framework: Materialize
 
 Node.js
+
 Javascript
+
 Express.js
+
 jQuery
 
 ### Heroku Deployment
