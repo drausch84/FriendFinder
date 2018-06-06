@@ -284,7 +284,7 @@ p{
                         </div>
                       </footer>
             
-                  <div id="modal1" class="modal">
+                  <div id="friend-modal" class="modal">
                     <div class="modal-content">
                         <h4>Closest Friend Match</h4>
                         <div class="divider"></div>
@@ -334,10 +334,10 @@ p{
       		.done(function(data) {
       			console.log('response = ' + JSON.stringify(data));
       			// Set the name and image values of friend match
-      			$('#userMatch').html(data.matchName);
-		    	$("#userMatchImage").attr("src", data.matchImage);
+      			$('#userMatch').html(data.name);
+		    	$("#userMatchImage").attr("src", data.photo);
 		    	// Pop open the modal dialog
-      			$('#modal1').modal('open');
+      			$('#friend-modal').modal('open');
       		});
 		});
 
