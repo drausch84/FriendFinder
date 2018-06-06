@@ -17,7 +17,7 @@ Find the deployed application here: [Heroku FriendFinder](https://pages.github.c
 
 This is the home page of the application:
 
-![image](https://user-images.githubusercontent.com/35150986/41062769-04628158-6994-11e8-8253-25d16176a42b.png)
+![image](https://user-images.githubusercontent.com/35150986/41063635-6b22bb68-6996-11e8-99fa-074bfe685acf.png)
 
 This is the survey page of the application:
 
