@@ -15,15 +15,78 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+
 <!--External css import -->
 <link rel = "stylesheet" type = "text/css" href = "./css/style.css">
+<style>
+    a{
+    color: mintcream;
+    font-family: 'Roboto Condensed';
+}
+h1{
+    color: black;
+    font-family: 'Roboto Condensed';
+    text-align:center;
+}
+h2{
+    color: black;
+    font-family: 'Roboto Condensed';
+    text-align:center;
+}
+h3{
+    color: black;
+    font-family: 'Roboto Condensed';
+}
+h4{
+    color: black;
+    font-family: 'Roboto Condensed';
+}
+h5{
+    color: mintcream;
+    font-family: 'Roboto Condensed';
+}
+p{
+    color: mintcream;
+    font-family: 'Roboto Condensed';
+    text-align:center;
+    font-size:18px;
+}
+.btn{
+    background:black;
+    color:mintcream;
+    font-family: 'Roboto Condensed';
+}
+  .waves-effect.waves-gray .waves-ripple {
 
+     background-color: gray;
+   }
+
+   body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background:ghostwhite;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+  .mainpanel{
+      margin:50px;
+
+  }
+  .input-field{
+      background:linear-gradient(lightblue,ghostwhite);
+  }
+</style>
   </head>
   <body>
   <header>
         <nav>
             <div class="nav-wrapper indigo lighten-2">
-              <a href="#" class="brand-logo"> <i class = "material-icons" style = "font-size:50px;color:mintcream">contacts</i>Friend Finder</a>
+              <a href="/" class="brand-logo"> <i class = "material-icons" style = "font-size:50px;color:mintcream">contacts</i>Friend Finder</a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="/survey">Survey</a></li>
                 <li><a href="/api/friends">API Friends List</a></li>
@@ -187,7 +250,7 @@
             
                                     <!-- Survey Submit Button -->
                                     <div>
-                                        <button class="btn waves-effect waves-light" type="submit" name="action" id="submitButton">Submit Responses
+                                        <button class="btn waves-effect waves-light" type="submit" name="action" id="submit">Submit Responses
                                             <i class="material-icons right">send</i>
                                         </button>
                                     </div>
@@ -222,20 +285,47 @@
                       </footer>
             
                 <!-- Modal Dialog Displaying Closest Friend Match -->
-                <div id="friend-modal" class="modal">
-                        <div class="modal-content">
-                          <h4>Your Best Friend Is:</h4>
-                          <div class = "divider"></div>
-                          <h4 id="userMatch"></h4>
-			              <img id="userMatchImage" class="materialboxed" width="650" src="">
-		        </div>
-		        <div class="modal-footer">
-			    <a href="/survey" class="modal-action modal-close waves-effect waves-red btn-flat">Take Survey Again</a>
-		        </div>
-	            </div>
-                        
+                <div id="results-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button class="close" data-dismiss="modal">&times;</button>
+                          <h2 class="modal-title"><strong>Best Match</strong></h2>
+                        </div>
+                        <div class="modal-body">
+                          <h2 id="match-name"></h2>
+                          <img id="match-img" src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg" alt="">
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                
+                    </div>
+                  </div>
+                
             
                 <script type="text/javascript">
+
+                // Chosen CSS
+    var config = {
+      ".chosen-select": {},
+      ".chosen-select-deselect": {
+        allow_single_deselect: true
+      },
+      ".chosen-select-no-single": {
+        disable_search_threshold: 10
+      },
+      ".chosen-select-no-results": {
+        no_results_text: "Oops, nothing found!"
+      },
+      ".chosen-select-width": {
+        width: "95%"
+      }
+    };
+
                     // initializing select field for survey
                      $(document).ready(function(){
                         $('select').formSelect();
@@ -248,38 +338,64 @@
 				endingTop: '10%' // Ending top style attribute
 			});
 		});
-		// Activate submit button
-		$('#submitButton').on('click', function(event) {
-			event.preventDefault();
-			// Gather user inputs
-			var userInput = {
-				name: $('#userName').val().trim(),
-				photo: $('#userPhoto').val().trim(),
-				scores:[
-					$('#question1').val(),
-					$('#question2').val(),
-					$('#question3').val(),
-					$('#question4').val(),
-					$('#question5').val(),
-					$('#question6').val(),
-					$('#question7').val(),
-					$('#question8').val(),
-					$('#question9').val(),
-					$('#question10').val()
-				]
-			};
-			
-			// Add user inputs to friends list
-			$.post('/api/friends', userInput)
-      		.done(function(data) {
-      		
-      			// Set the name and image values of friend match
-      			$('#userMatch').html(data.matchName);
-		    	$("#userMatchImage").attr("src", data.matchImage);
-		    	// Pop open the modal dialog
-      			$('#modal1').modal('open');
-      		});
-		});
+		// Capture the form inputs
+        $("#submit").on("click", function(event) {
+      event.preventDefault();
+
+      // Form validation
+      function validateForm() {
+        var isValid = true;
+        $(".form-control").each(function() {
+          if ($(this).val() === "") {
+            isValid = false;
+          }
+        });
+
+        $(".chosen-select").each(function() {
+
+          if ($(this).val() === "") {
+            isValid = false;
+          }
+        });
+        return isValid;
+      }
+
+      // If all required fields are filled
+      if (validateForm()) {
+        // Create an object for the user"s data
+        var userData = {
+          name: $("#name").val(),
+          photo: $("#photo").val(),
+          scores: [
+            $("#question1").val(),
+            $("#question2").val(),
+            $("#question3").val(),
+            $("#question4").val(),
+            $("#question5").val(),
+            $("#question6").val(),
+            $("#question7").val(),
+            $("#question8").val(),
+            $("#question9").val(),
+            $("#question10").val()
+          ]
+        };
+
+        // AJAX post the data to the friends API.
+        $.post("/api/friends", userData, function(data) {
+
+          // Grab the result from the AJAX post so that the best match's name and photo are displayed.
+          $("#match-name").text(data.name);
+          $("#match-img").attr("src", data.photo);
+
+          // Show the modal with the best match
+          $("#results-modal").modal("toggle");
+
+        });
+      } else {
+        alert("Please fill out all fields before submitting!");
+      }
+    });
+
 
                    
                 </script>
