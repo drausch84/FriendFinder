@@ -15,7 +15,7 @@ Express.js
 jQuery
 
 ### Heroku Deployment
-Find the deployed application here: [Heroku FriendFinder](https://pages.github.com/).
+Find the deployed application here: [Heroku FriendFinder](https://lit-temple-87580.herokuapp.com/survey).
 
 ### ScreenShots
 
